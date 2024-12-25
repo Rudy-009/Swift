@@ -1,13 +1,40 @@
 # Concurrency
 > Perform asynchronous operations.
 
-## Concurrency vs Parrell 
+# Introduction
 
-Concurrency
-- 여러 작업을 번갈아가며 실행하는 것으로, 실제로는 동시에 실행되지 않을 수 있다. (너무 빨라서 그렇게 보임)
+## Thread
+- 프로세스 내에서 실제로 작업을 수행하는 주체.
+- Swift에서는 Thread를 자동으로 관리하기 때문에, **프로그래머는 단순히 비동기 작업 (async/await)을 정의, 실행 순서 지정만 하면 된다.**
+    - Thread 관리 키워드 (in JAVA, Swift에는 없는)
+        - synchronized 키워드: 한 번에 하나의 스레드만 접근할 수 있도록 제어
+        - Lock: 명시적으로 자원에 대한 접근을 제어
+        - volatile: 변수의 가시성을 보장하여 멀티스레드 환경에서의 일관성을 유지
 
-Parallelism
+**Thread Pool**
+> Thread를 생성하고 재사용하는 효율적인 시스템
+- Swift에서 GCD(Grand Central Dispatch)를 통해 Thread Pool을 관리한다.
+
+## Concurrency vs Parallelism
+
+**Concurrency**
+- 여러 작업이 빠르게 번갈아 실행되는 것. (Context Switching)
+- Single-Core
+
+**Parallelism**
 - 실제로 여러 작업이 다른 CPU 코어에서 동시에 실행되는 것
+- Multi-Core
+
+## Synchronous vs Asynchronous
+
+**Synchronous**
+- 작업을 순차적으로 실행된다. (직렬) 이전 작업이 완료될 때까지 다음 작업을 기다린다. 코드의 실행 흐름이 예측 가능하고 단순하다.
+
+**Asynchronous**
+- 작업들이 서로 독립적으로 실행된다. (병렬), 동시에 여러 작업을 처리할 수 있다. 한 작업이 완료되기를 기다리는 동안 다른 작업을 수행할 수 있어 효율적이다.
+
+- Q. 그럼 Single-Core 환경에서 Asynchronous하게 실행할 수 있는가?
+- A. Conext Switching을 통해 여러 쓰레드를 번갈아 가며 실행하여 마치 여러 작업들이 동시에 실행되는 것처럼 구현할 수 있다.
 
 # Keywords
 
@@ -15,7 +42,7 @@ Parallelism
 - async/await: 비동기 함수를 정의하고 호출하는 Swift의 기본 키워드
 - Task: 동시성 작업의 기본 단위로, 실행, 우선순위 및 관리를 담당하는 객체
 - Actor: 데이터 경쟁을 방지하고 상태를 안전하게 관리하는 참조 타입
-- Sendable Type :
+- Sendable Type: 
 
 ## Environment
 - Main Thread: UI 업데이트를 담당하는 주 실행 스레드
@@ -30,14 +57,3 @@ Parallelism
 - Data Race: 
 - Reentrancy: 
 - Critical Section: 
-
-# 
-
-async : 비동기 함수임을 알려주는 키워드
-규칙 : 함수 선언에서 -> 바로 이전에 쓴다. (throw가 있으면 throw 이전에)
-예시 : func download() async throw -> ...
-
-await : async 함수를 호출할 때, 앞에 붙여주는 키워드
-예시 : await download() 
-
-await는 이 함수의 동작이 완료된 이후에 다음 코드를 실행하라는 명령어로 동시성을 제어한다.
