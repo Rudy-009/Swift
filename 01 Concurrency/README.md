@@ -170,4 +170,8 @@ guard Task.isCancelled else {return nil}
 3. 부모 Task가 취소(canceled)되면 자식 Task도 자동으로 취소된다.
 4. 부모 Task-local의 값이 효율적으로 자식 Task에 전파된다.
 
+## Unstructed Concurrency
 
+- Task에 부모가 없다.
+- Task.init()으로 직접 생성한다.
+- 직접 detarched()를 호출하여 작업 종료를 알려야 한다.
