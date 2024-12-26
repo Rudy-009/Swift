@@ -32,24 +32,17 @@
 - Q. 그럼 Single-Core 환경에서 Asynchronous하게 실행할 수 있는가?
 - A. Conext Switching을 통해 여러 쓰레드를 번갈아 가며 실행하여 마치 여러 작업들이 동시에 실행되는 것처럼 구현할 수 있다.
 
-# Keywords
-
-## Basics
 - async/await: 비동기 함수를 정의하고 호출하는 Swift의 기본 키워드
 - Task: 동시성 작업의 기본 단위로, 실행, 우선순위 및 관리를 담당하는 객체
 - Actor: 데이터 경쟁을 방지하고 상태를 안전하게 관리하는 참조 타입
-- Sendable Type: 
 
-## Environment
-- Main Thread: UI 업데이트를 담당하는 주 실행 스레드
-- Cooperative Thread Pool: CPU 코어 수에 맞춰 제한된 동시성 작업을 실행하는 스레드 풀
+# Defining and Calling Asynchronous Function
 
-## Concurrenty Pattern
-- Structured Concurrency: 부모-자식 관계로 구성된 계층적 태스크 구조
-- Unstructured Concurrency: 독립적으로 실행되는 단독 태스크 구조
-- Task Group: 관련된 동시성 작업들을 그룹으로 관리하는 구조
-
-# async/await
+- *async* : 비동기 함수임을 알려주는 키워드
+    - 함수 시그니처에서 () 다음 -> 전에 쓰면 된다. *throw*가 있으면 앞에 붙여주면 된다.
+    
+- *await* : 비동기 함수를 실행하려 할 때 앞에 쓴다.
+    - try 뒤 함수 이름 앞에 쓴다.
 
 ```swift
 func fetchUserData() async throws -> User {
@@ -58,9 +51,34 @@ func fetchUserData() async throws -> User {
 }
 ```
 
-- *async* : 비동기 함수임을 알려주는 키워드
-    - 함수 시그니처에서 () 다음 -> 전에 쓰면 된다. *throw*가 있으면 앞에 붙여주면 된다.
-    - 
-- *await* : 비동기 함수를 실행하려 할 때 앞에 쓴다.
-    - try 뒤 함수 이름 앞에 쓴다.
+- *for-await-in loop* : 를 이용하여 for문 안에서 이미지를 비동기적으로 불러올 수 있다.
+- Sequence Protocol을 체택하여 for-in loop안에서 반복할 수 있게 했던것 처럼 AsyncSequence Protocol을 체택하면 된다.
 
+```swift
+import Foundation
+
+
+let handle = FileHandle.standardInput
+for try await line in handle.bytes.lines {
+    print(line)
+}
+```
+
+
+# Calling Asynchronous Function in Parallel
+
+- *async let* : 비동기 작업을 병렬적으로 처리할 수 있게 해준다.
+
+```swift
+let firstImage = await loadImage(index: 1) // 이 코드가 끝나야지만 아래 코드가 실행된다.
+let secondImage = await loadImage(index: 2)
+let thirdImage = await loadImage(index: 3)
+```
+
+```swift
+async let firstImage = loadImage(index: 1)
+async let secondImage = loadImage(index: 2)
+async let thirdImage = loadImage(index: 3)
+let images = await [firstImage, secondImage, thirdImage]
+```
+- 사진을 불러오는 위 코드는 모두 병렬적으로 실행된다.

@@ -38,7 +38,6 @@ func loadUserWithDetails() async throws {
 
 try await loadUserWithDetails()
 
-
 struct User {
     let id: Int
     let name: String
