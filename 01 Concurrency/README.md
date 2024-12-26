@@ -49,7 +49,18 @@
 - Unstructured Concurrency: 독립적으로 실행되는 단독 태스크 구조
 - Task Group: 관련된 동시성 작업들을 그룹으로 관리하는 구조
 
-## Safety
-- Data Race: 
-- Reentrancy: 
-- Critical Section: 
+# async/await
+
+```swift
+func fetchUserData() async throws -> User {
+    try await Task.sleep(nanoseconds: 1_000_000_000) // 1초 대기
+    return User(id: 1, name: "John")
+}
+```
+
+- *async* : 비동기 함수임을 알려주는 키워드
+    - 함수 시그니처에서 () 다음 -> 전에 쓰면 된다. *throw*가 있으면 앞에 붙여주면 된다.
+    - 
+- *await* : 비동기 함수를 실행하려 할 때 앞에 쓴다.
+    - try 뒤 함수 이름 앞에 쓴다.
+
