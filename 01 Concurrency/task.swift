@@ -87,17 +87,29 @@ func fetchBookDetails(id: Int) async throws -> (Book, Data, [String], [Book]) {
 
 func withTimeout<T>(seconds: Double, operation: @escaping () async throws -> T) async throws -> T {
     try await withThrowingTaskGroup(of: T.self) { group in
+        // 실제 작업 Task 추가
         group.addTask {
             try await operation()
         }
         
+        // 타임아웃 Task 추가
         group.addTask {
             try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
             throw BookServiceError.timeoutError
         }
         
-        let result: T? = try await group.next()
-        group.cancelAll()
-        return result!
+        do {
+            // 먼저 완료되는 작업의 결과를 가져옴
+            if let result = try await group.next() {
+                group.cancelAll()
+                return result
+            } else {
+                throw BookServiceError.timeoutError
+            }
+        } catch {
+            // 에러 발생 시 모든 작업 취소
+            group.cancelAll()
+            throw error
+        }
     }
 }
