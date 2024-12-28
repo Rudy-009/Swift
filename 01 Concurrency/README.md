@@ -21,6 +21,8 @@
 - 실제로 여러 작업이 다른 CPU 코어에서 동시에 실행되는 것
 - Multi-Core
 
+![](ConcurrencyVSParallelism.png)
+
 ## Synchronous vs Asynchronous
 
 **Synchronous**
