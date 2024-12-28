@@ -6,14 +6,17 @@
 //
 
 import UIKit
+import Alamofire
+import SnapKit
 
 class ViewController: UIViewController {
-
+    
+    let unsplashAccessKey = Bundle.main.infoDictionary?["UnsplashAccessKey"] as! String
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.view.backgroundColor = .white
     }
-
 
 }
 

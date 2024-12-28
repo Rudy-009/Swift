@@ -10,6 +10,8 @@ import SnapKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     
+    static let identifier = "ImageCollectionViewCellIdentifier"
+    
     let imageView: UIImageView = {
         let image = UIImageView()
         return image
