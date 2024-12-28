@@ -107,7 +107,6 @@ await withTaskGroup(of: Data.self) { group in
         }
     }
 
-
     for await photo in group {
         show(photo)
     }
@@ -126,12 +125,10 @@ let photos = await withTaskGroup(of: Data.self) { group in
         }
     }
 
-
     var results: [Data] = []
     for await photo in group {
         results.append(photo)
     }
-
 
     return results
 }
