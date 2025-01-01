@@ -174,3 +174,48 @@ guard Task.isCancelled else {return nil}
 - Task에 부모가 없다.
 - Task.init()으로 직접 생성한다.
 - 직접 detarched()를 호출하여 작업 종료를 알려야 한다.
+
+# Actor 
+> 상태를 격리하여 데이터 경쟁(race condition)을 방지하고, 동시 접근으로 인한 예기치 않은 동작을 방지한다.
+
+## Actor의 특징
+- 참조 타입
+- 단일 접근 보장
+- 비동기적 상태 접근
+    - Actor의 속성이나 메서드에 접근할 때는 await 키워드를 사용하여 비동기적으로 접근한다.
+
+```swift
+actor Counter {
+    var value = 0
+    
+    func increment() {
+        value += 1
+    }
+    
+    func getValue() -> Int {
+        return value
+    }
+}
+```
+```swift
+let counter = Counter()
+
+Task {
+    await counter.increment()
+    let currentValue = await counter.getValue()
+    print("Current value: \(currentValue)") // "Current value: 1"
+}
+```
+메서드는 await를 통해 비동기적으로 실행한다.
+
+### Actor vs Class
+- 공통점 : 
+
+    1. 참조 타입
+    2. 메서드와 속성을 가질 수 있다.
+
+- 차이점 : 
+
+    1. Actor는 동시성 제어를 통해 데이터 경쟁 문제를 예방할 수 있다.
+    여러 스레드에 접근하더라도, 한 번에 하나의 스레드만 Actor의 상태에 접근할 수 있도록 보장한다.
+
