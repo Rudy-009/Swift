@@ -32,7 +32,7 @@
 - 작업들이 서로 독립적으로 실행된다. (병렬), 동시에 여러 작업을 처리할 수 있다. 한 작업이 완료되기를 기다리는 동안 다른 작업을 수행할 수 있어 효율적이다.
 
 - Q. 그럼 Single-Core 환경에서 Asynchronous하게 실행할 수 있는가?
-- A. Conext Switching을 통해 여러 쓰레드를 번갈아 가며 실행하여 마치 여러 작업들이 동시에 실행되는 것처럼 구현할 수 있다.
+- A. Context Switching을 통해 여러 쓰레드를 번갈아 가며 실행하여 마치 여러 작업들이 동시에 실행되는 것처럼 구현할 수 있다.
 
 - async/await: 비동기 함수를 정의하고 호출하는 Swift의 기본 키워드
 - Task: 동시성 작업의 기본 단위로, 실행, 우선순위 및 관리를 담당하는 객체
@@ -56,7 +56,7 @@ func fetchUserData() async throws -> User {
 ```
 
 - *for-await-in loop* : 를 이용하여 for문 안에서 이미지를 비동기적으로 불러올 수 있다.
-- Sequence Protocol을 체택하여 for-in loop안에서 반복할 수 있게 했던것 처럼 AsyncSequence Protocol을 체택하면 된다.
+- Sequence Protocol을 채택하여 for-in loop안에서 반복할 수 있게 했던것 처럼 AsyncSequence Protocol을 채택하면 된다.
 
 ```swift
 import Foundation
@@ -144,7 +144,7 @@ let photos = await withTaskGroup(of: Data.self) { group in
     - Returning nil or empty collection
     - Returning the partially completed work
 
-## How to Cancele
+## How to Cancel
 
 1. Task.checkCancellation() -> Bool 호출
 
@@ -158,10 +158,10 @@ if Task.checkCancellation() {
 guard Task.isCancelled else {return nil}
 ```
 
-# Structed Concurrency & Unstructed Concurrency
+# Structured Concurrency & Unstructured Concurrency
 
 ## Structured Concurrency
-- Task는 모두 부모가 있고, 자식을 가질 수 있다. 이런 접근을 Structed Concurrency 라고 한다.
+- Task는 모두 부모가 있고, 자식을 가질 수 있다. 이런 접근을 Structured Concurrency 라고 한다.
 
 ### 장점
 1. 부모 Task에서 자식 Task가 끝나는 것을 놓치는 것을 방지할 수 있다.
@@ -169,14 +169,14 @@ guard Task.isCancelled else {return nil}
 3. 부모 Task가 취소(canceled)되면 자식 Task도 자동으로 취소된다.
 4. 부모 Task-local의 값이 효율적으로 자식 Task에 전파된다.
 
-## Unstructed Concurrency
+## Unstructured Concurrency
 
 - Task에 부모가 없다.
 - Task.init()으로 직접 생성한다.
-- 직접 detarched()를 호출하여 작업 종료를 알려야 한다.
+- 직접 detached()를 호출하여 작업 종료를 알려야 한다.
 
 # Actor 
-> 상태를 격리하여 데이터 경쟁(race condition)을 방지하고, 동시 접근으로 인한 예기치 않은 동작을 방지한다.
+> 상태를 격리하여 데이터 경쟁(data race)을 방지하고, 동시 접근으로 인한 예기치 않은 동작을 방지한다.
 
 ## Actor의 특징
 - 참조 타입
