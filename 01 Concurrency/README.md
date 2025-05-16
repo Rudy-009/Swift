@@ -1,11 +1,31 @@
 # Concurrency
-> Perform asynchronous operations.
+
+# Before
+
+## Process
+> 프로그램이 CPU로 부터 자원(메모리)를 받아 실행되고 있는 상태.
+- 작업의 단위
+- 각 프로세스 마다 메모리 영역은 접근이 불가능하다.
+- Stack(지역 함수, 지역 변수), Queue, Text(코드), Data(전역 변수) 이렇게 4개의 영역이 있다.
+
+## MultiProcess, Context Switching
+- 하나의 프로그램을 실행하면 여러개의 프로세스가 실행된다.
+- CPU안에서는 한 번에 하나의 작업(프로세스)만 실행 가능하다. 
+- 따라서 기존에 수행중인 프로세스를 멈추고 다른 프로세스를 실행할 때, Context Switching이 발생한다.
+- 이로인해 오버헤드가 발생할 수 있다. (문제 상황)
+
+## MultiThread
+- Process 내에 여러 Thread
+- 공유하는 자원이 있기 때문에 MultiThread가 Context Switching이 빠르다.
 
 # Introduction
 
 ## Thread
-- 프로세스 내에서 실제로 작업을 수행하는 주체.
+> 프로세스 내에서 실제로 작업을 수행하는 주체.
+- 작업 흐름의 단위
+- Stack 영역을 할당 받고, 나머지는 공유한다.
 - Swift에서는 Thread를 자동으로 관리하기 때문에, **프로그래머는 단순히 비동기 작업 (async/await)을 정의, 실행 순서 지정만 하면 된다.**
+- 프로그래머는 메인쓰레드에 몰린 작업들을 대기행렬 Queue에 넣어주면 OS에서 알아서 처리해준다. (프로그래머는 Thread를 관리하지 않아도 된다.)
 
 **Thread Pool**
 > Thread를 생성하고 재사용하는 효율적인 시스템
@@ -13,12 +33,12 @@
 
 ## Concurrency vs Parallelism
 
-**Concurrency**
+**Concurrency Programming**
 - 여러 작업이 빠르게 번갈아 실행되는 것. (Context Switching)
 - Single-Core
 
-**Parallelism**
-- 실제로 여러 작업이 다른 CPU 코어에서 동시에 실행되는 것
+**Parallelism Programming**
+- 여러 작업이 서로 다른 CPU 코어에서 동시에 실행되는 것
 - Multi-Core
 
 ![](ConcurrencyVSParallelism.png)
@@ -219,3 +239,7 @@ Task {
     1. Actor는 동시성 제어를 통해 데이터 경쟁 문제를 예방할 수 있다.
     여러 스레드에 접근하더라도, 한 번에 하나의 스레드만 Actor의 상태에 접근할 수 있도록 보장한다.
 
+
+참고 블로그 <br>
+<a href="https://seokyoungg.tistory.com/m/25">seok-young
+님의 [iOS] 동시성 프로그래밍(1)</a>
