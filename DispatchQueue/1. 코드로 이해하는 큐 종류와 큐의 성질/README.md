@@ -68,7 +68,7 @@ DispatchQueue.main.async{ task4() }
 ![](async.png)
 
 - 작업의 순서는 보장한다.
-- 작업의 완료를 기다리지 않는다. task 함수를 큐에 보내기만 하고 메인 쓰레드는 작업을 이어나갔다. 그래서 main ended가 작업들이 완료되기 전에 출력된 것이다.
+- 작업의 완료를 기다리지 않는다. task 함수를 큐에 보내고 다음 작업을 계속 이어나갔습니다. 그래서, 함수가 왼료되기 전에 메인 쓰레드는 종료된 것입니다.
 
 # 글로벌 큐 (Global Queue)
 
@@ -82,8 +82,8 @@ DispatchQueue.global().sync { task2() }
 DispatchQueue.global().sync { task3() }
 DispatchQueue.global().sync { task4() }
 
-- 작업의 순서를 보장한다? Global Queue에 작업을 보내면 메인 쓰레드에서 작업이 끝나기를 기다리고 다음 작업을  Queue에 보낸다. 따라서 순서를 보장하는 것처럼 보일 뿐이다.
-- 작업의 완료를 기다린다. task 함수의 작업 완료를 기다린다.
+- 작업의 순서를 보장한다? Global Queue에 작업을 보내면 메인 쓰레드에서 작업이 끝나기를 기다리고 다음 작업을  Queue에 보내죠. 따라서 순서를 보장하는 것처럼 보일 뿐입니다.
+- 작업의 완료를 기다린다. 
 ```
 
 ![](sync.png)
@@ -100,7 +100,7 @@ DispatchQueue.global().async { task4() }
 
 # 프라이빗(커스텀) 큐 (Private Queue)
 
-- 프라이빗 큐는 기본값으로 순서 큐이다. 커스텀 큐 답게 QoS를 모두 바꿀 수 있고, (순서, 동시) 또한 바꿀 수 있다.
+- 프라이빗 큐는 기본값으로 순서 큐이다. 커스텀 큐 답게 QoS를 모두 바꿀 수 있고, (순서, 동시) 또한 바꿀 수 있습니다.
 
 ```swift
 let queue = DispatchQueue(label: "com.example.concurrentQueue")
@@ -112,6 +112,9 @@ queue.sync { task4() }
 
 ![](sync.png)
 
+- 작업의 순서를 보장한다.
+- 작업의 완료를 기다린다.
+
 ```swift
 let queue = DispatchQueue(label: "com.example.concurrentQueue")
 queue.async { task1() }
@@ -121,3 +124,5 @@ queue.async { task4() }
 ```
 
 ![](async.png)
+
+위의 글로벌 큐와 똑같이 실행됩니다.
