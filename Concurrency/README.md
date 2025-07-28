@@ -67,3 +67,5 @@ DispatchQueue.main.sync {
 
 # 동시 큐 (Concurrent Queue)
 큐에 대기중인 작업을 모두 다른 쓰레드로 보냅니다. 그렇다면 각자의 Thread에서 작업이 실행되겠죠.
+
+다음 글에서는 예시 코드를 통해 어떻게 DispatchQueue가 작업을 수행하는지 알아보겠습니다.
