@@ -1,9 +1,10 @@
 # Overview
 
-들어가기에 앞서 기본적인 용어를 정리하고 들어가보겠습니다.
+본격적으로 시작하기 전에, 먼저 기본 용어들을 정리해볼게요.
+DispatchQueue를 공부하면서 꼭 알아야 할 중요한 개념들이니, 잘 이해하고 넘어가면 좋겠습니다.
 
 ```swift
-DispatchQueue.main().async {
+DispatchQueue.main.async {
 	// 작업
 }
 ```
@@ -30,46 +31,15 @@ GCD란? 언어 기능, 런타임 라이브러리, 시스템 개선 사항을 포
 '작업 흐름의 단위' 라고 정의되어 있습니다. 우선, 이 곳에 작업이 배치되면 실행된다고 생각하시면 좋습니다.
 
 # 디스패치큐 (DispatchQueue)
-영어 문장으로 코드를 해석해 봅시다. Dispatch는 4형식 동사입니다. Dispatch A B, 'B를 A에게로 전송하라' 라는 명령문 입니다. 큐에 작업을 보내라! 라는 명령문이죠.
 
-```swift
-DispatchQueue.main().async {
-	// 작업
-}
-```
-코드1을 다시 볼까요? Dispatch Main Queue Asynchronous Task.
+공식문서에서 DispatchQueue를 다음과 같이 정의하고 있습니다.
 
-'비동기 작업을 메인 큐에 전송하라'입니다.
+공식문서
+> An object that manages the execution of tasks serially or concurrently on your app’s main thread or on a background thread.
 
-형용사 혹은 명사로 설명을 추가로 해서 DispatchQueue를 구체화 하는게 보이시나요? 
+앱의 메인 혹은 다른 쓰레드에서 작업들의 실행을 관리하는 객체(클래스)입니다.
 
-후에 나올 내용들은 모두 작업의 종류, 큐의 종류 혹은 방식을 나타내는 키워드들입니다.
-
-```swift
-DispatchQueue.{큐 종류 (main, global, private)}({QoS(6종류)}).{async/sync} {
-	// 작업
-}
-```
-
-아래 테이블은 Queue의 종류별로 고정된 값을 정리했습니다.
-|Queue 종류	| 특징 |	QoS 제약 |	큐 유형 제약 |
-| --       | --- | --- | --- |
-|main       |UI 스레드 전용  | .userInteractive 고정| 	Serial(순서) 고정 |
-|global     |시스템 글로벌 큐 |	모든 QoS 사용 가능 |	Concurrent(동시) 고정 |
-|private    |커스텀 큐      | 모든 QoS 사용 가능 |	Serial/Concurrent 모두 가능 |
-
-
-- main과 sync를 사용하지 말것!
-
-```swift
-DispatchQueue.main.sync {
-    // 작업
-}
-```
-
- 에러가 발생합니다. main 쓰레드가 어떤 작업이 끝나기를 기다리는 것은 매우 위험합니다. 다른 중요한 작업들이 많기 때문이죠.
-
-메인 큐는 UI를 그리는 작업을 하기 때문에 다른 작업이 지연되는 것을 지양합니다. UI 작업이 느려지면 사용자는 앱이 고장난것으로 간주할 수 있기 때문이죠, 그래서 작업이 오래 걸리는 경우 비동기 작업으로 빼는 것입니다.
+저희가 앞으로 많이 보게될 단어입니다. DispatchQueue 객체를 통해 다양한 종류의 작업을 메인 혹은 백그라운드 쓰레드에서 작동하게 해줍니다. 이로써 개발자는 어느 쓰레드에 등록할지, 얼마나 많은 쓰레드를 사용해야 하는지 등의 고민에서 벗어나게 됩니다.
 
 # 비동기 (Asynchronous)
 작업을 실행시킨 후, 그 작업이 끝나기를 기다리지 않고 다음 일을 진행하는 것을 의미합니다.
@@ -84,6 +54,24 @@ DispatchQueue.main.sync {
 
 # 동시 큐 (Concurrent Queue)
 큐에 대기중인 작업을 모두 다른 쓰레드로 보냅니다. 그렇다면 각자의 Thread에서 작업이 실행되겠죠. 작업의 순서를 보장하지 않습니다.
+
+# QoS (Quality of Service)
+
+공식문서
+> Quality-of-service classes that specify the priorities for executing tasks.
+
+작업 수행의 우선순위를 구체화하는 클래스
+
+| 종류 | 설명 |
+| --- | --- |
+| userInteractive | 사용자 상호작용과 연관된 작업(애니메이션, 이벤트 처리, UI 업데이트) |
+| userInitiated | 즉시 필요하지만, 비동기족으로 처리된 작업 |
+| default | 일반적인 작업 |
+| utility |  Progress Indicator와 함께 길게 실행되는 작업 |
+| background |  유저가 직접적으로 인지하지 않는 작업 |
+| unspecified | legacy API 지원 |
+
+QoS가 높을 수록 더 많은 쓰레드를 할당하여 코드를 빨리 실행시킨다.
 
 다음 글에서는 예시 코드를 통해 어떻게 DispatchQueue가 작업을 수행하는지 알아보겠습니다.
 
