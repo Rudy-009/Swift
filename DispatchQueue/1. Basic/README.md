@@ -156,3 +156,11 @@ DispatchQueue.{큐 종류 (main, global, private)}(qos: QoS).{async/sync} {
 |main       |UI 스레드 전용  | .userInteractive 고정| 	Serial(순서) 고정 |
 |global     |시스템 글로벌 큐 |	모든 QoS 사용 가능 |	Concurrent(동시) 고정 |
 |private    |커스텀 큐      | 모든 QoS 사용 가능 |	Serial/Concurrent 모두 가능 |
+
+참고 자료
+
+앨런 iOS Concurrency(동시성)
+
+https://www.inflearn.com/course/ios-concurrency-gcd-operation/dashboard
+
+애플 공식문서
