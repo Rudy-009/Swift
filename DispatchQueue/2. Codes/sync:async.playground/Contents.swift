@@ -63,10 +63,10 @@ print("main started")
 //task3()
 //task4()
 
-queue.sync { task1() }
-queue.sync { task2() }
-queue.sync { task3() }
-queue.sync { task4() }
+//queue.sync { task1() }
+//queue.sync { task2() }
+//queue.sync { task3() }
+//queue.sync { task4() }
 
 //queue.async { task1() }
 //queue.async { task2() }
