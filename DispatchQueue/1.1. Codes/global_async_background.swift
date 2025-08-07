@@ -1,11 +1,9 @@
 import Foundation
 
-let custom = DispatchQueue(label: "com.private")
-
 print("main started ⭐️")
 
-for i in 0...5 {
-    custom.async {
+for i in 0...100 {
+    DispatchQueue.global(qos: .background).async {
         print("No.\(i), Thread: \(Thread.current)")
     }
 }

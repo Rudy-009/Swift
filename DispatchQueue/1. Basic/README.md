@@ -157,6 +157,143 @@ DispatchQueue.{큐 종류 (main, global, private)}(qos: QoS).{async/sync} {
 |global     |시스템 글로벌 큐 |	모든 QoS 사용 가능 |	Concurrent(동시) 고정 |
 |private    |커스텀 큐      | 모든 QoS 사용 가능 |	Serial/Concurrent 모두 가능 |
 
+# 코드로 이해하기
+
+글로벌 큐와 프라이빗 큐를 직접 코드로 실행해보며 작동 원리를 이해해보겠습니다.
+
+## Global Queue
+
+### sync 함수의 이해
+
+```swift
+print("main started ⭐️")
+
+for i in 0...5 {
+    DispatchQueue.global().sync {
+        print("No.\(i), Thread: \(Thread.current)")
+    }
+}
+
+print("main ended ⭐️")
+
+// main started ⭐️
+// No.0, Thread: <_NSMainThread: 0x10e9efbd0>{number = 1, name = main}
+// No.1, Thread: <_NSMainThread: 0x10e9efbd0>{number = 1, name = main}
+// No.2, Thread: <_NSMainThread: 0x10e9efbd0>{number = 1, name = main}
+// No.3, Thread: <_NSMainThread: 0x10e9efbd0>{number = 1, name = main}
+// No.4, Thread: <_NSMainThread: 0x10e9efbd0>{number = 1, name = main}
+// No.5, Thread: <_NSMainThread: 0x10e9efbd0>{number = 1, name = main}
+// main ended ⭐️
+```
+
+코드 결과를 보면 의구심이 드실겁니다. 왜 쓰레드 번호가 1인 메인에서 실행되었을까? 글로벌 큐는 다른 쓰레드에 보내는거 아니었나? 이유는 **sync**에 있습니다. 
+
+sync의 [공식문서](https://developer.apple.com/documentation/dispatch/dispatchqueue/sync%28execute%3A%29-3segw)를 보시면 아래와 같은 설명이 있습니다.
+
+> As a performance optimization, this function executes blocks on the current thread whenever possible, with one exception: Blocks submitted to the main dispatch queue always run on the main thread.
+
+> 성능 최적화를 위해 이 함수는 쓰레드에서 가능하면 작업(block)을 실행시킨다. 단, 메인 디스패치 큐에 보낸 작업은 메인 쓰레드에서 실행된다.
+
+결론, sync는 별도의 쓰레드 생성 및  전송없이 GCD에서 성능 최적화를 위해 호출된 쓰레드에서 작업을 수행할 수 있다.
+
+### global().async
+
+```swift
+print("main started ⭐️")
+
+for i in 0...5 {
+    DispatchQueue.global().async {
+        print("No.\(i), Thread: \(Thread.current)")
+    }
+}
+
+print("main ended ⭐️")
+
+RunLoop.main.run()
+
+// main started ⭐️
+// main ended ⭐️
+// No.1, Thread: <NSThread: 0x13d934450>{number = 3, name = (null)}
+// No.4, Thread: <NSThread: 0x13dae5060>{number = 6, name = (null)}
+// No.3, Thread: <NSThread: 0x1140b0480>{number = 5, name = (null)}
+// No.0, Thread: <NSThread: 0x13d843850>{number = 2, name = (null)}
+// No.5, Thread: <NSThread: 0x11406e510>{number = 7, name = (null)}
+// No.2, Thread: <NSThread: 0x13cf7a1a0>{number = 4, name = (null)}
+```
+
+main은 비동기 작업의 종료를 기다리지 않고 종료됩니다. 모든 비동기 작업의 종료를 보지 못하고 코드가 종료되어서 **RunLoop.main.run()** 를 이용하여 코드가 종료되지 않도록 수정했습니다.
+
+### QoS에 따른 실행 시간과 쓰레드의 개수
+
+위 실험에서 0부터 5까지 모든 작업이 서로 다른 쓰레드를 배정받았습니다. 그렇다면, *QoS* 를 낮추게 되면 쓰레드의 개수는 어떻게 될까요? 혹은, 더욱 많은 작업을 할당하고 더 높은 *QoS*로  설정하면 몇 개의 쓰레드까지 발행할 수 있을까요? 실험 결과는 아래 Table로 작성해 놓았습니다.
+
+1000 개의 작업을 할당했을 때, QoS에 따라 할당된 쓰레드의 개수입니다.
+| QoS |  쓰레드 개수 | 작업 시간 |
+| --  | --- | --- |
+|  .userInteractive   |   43  |  0.509초 |
+| .userInitiated | 17 | 0.583초 |
+| .default | 14 | 0.525초 |
+| .utility | 23 | 0.514초 |
+| .background | 3 | 0.611초 |
+
+결론, QoS가 높아질 수록 쓰레드 개수가 증가하고, 작업 시간이 줄어드는 추세라는 것을 알 수 있습니다.
+
+추가로 작업안에 **sleep(1)** 를 추가하여 의도적으로 실행 시간을 늘리게 된다면 더 많은 쓰레드를 할당하는 것도 보실 수 있습니다.
+
+## PrivateQueue
+
+프라이빗 큐에서도 sync를 쓰게 된다면 실행 쓰레드에서 작업이 할당되는 것을 이제는 유추할 수 있습니다.
+
+```swift
+print("main started ⭐️")
+
+for i in 0...5 {
+    DispatchQueue(label: "com.private").sync {
+        print("No.\(i), Thread: \(Thread.current)")
+    }
+}
+
+print("main ended ⭐️")
+
+// main started ⭐️
+// No.0, Thread: <_NSMainThread: 0x135e88430>{number = 1, name = main}
+// No.1, Thread: <_NSMainThread: 0x135e88430>{number = 1, name = main}
+// No.2, Thread: <_NSMainThread: 0x135e88430>{number = 1, name = main}
+// No.3, Thread: <_NSMainThread: 0x135e88430>{number = 1, name = main}
+// No.4, Thread: <_NSMainThread: 0x135e88430>{number = 1, name = main}
+// No.5, Thread: <_NSMainThread: 0x135e88430>{number = 1, name = main}
+// main ended ⭐️
+```
+
+비동기 작업을 실행했을 때, 어떻게 되는지 보겠습니다.
+
+```swift
+print("main started ⭐️")
+
+for i in 0...5 {
+    DispatchQueue(label: "com.private").async {
+        print("No.\(i), Thread: \(Thread.current)")
+    }
+}
+
+print("main ended ⭐️")
+
+RunLoop.main.run()
+
+// main started ⭐️
+// main ended ⭐️
+// No.0, Thread: <NSThread: 0x157731480>{number = 2, name = (null)}
+// No.1, Thread: <NSThread: 0x157731480>{number = 2, name = (null)}
+// No.2, Thread: <NSThread: 0x157731480>{number = 2, name = (null)}
+// No.3, Thread: <NSThread: 0x157731480>{number = 2, name = (null)}
+// No.4, Thread: <NSThread: 0x157731480>{number = 2, name = (null)}
+// No.5, Thread: <NSThread: 0x157731480>{number = 2, name = (null)}
+```
+
+프라이빗 큐는 기본적으로 순서 큐 이기 때문에 하나의 쓰레드로만 보내어 순서가 보장됩니다. 그리하여 순서가 보장된 결과를 볼 수 있습니다.
+
+이상, 큐의 종류, QoS, 작업의 종류를 조합해 가며 코드를 작성하고 실험을 통해 개념을 알아봤습니다. 도움이 되셨기를 바라며 피드백은 언제나 환영입니다.
+
 참고 자료
 
 앨런 iOS Concurrency(동시성)
@@ -164,3 +301,9 @@ DispatchQueue.{큐 종류 (main, global, private)}(qos: QoS).{async/sync} {
 https://www.inflearn.com/course/ios-concurrency-gcd-operation/dashboard
 
 애플 공식문서
+
+https://developer.apple.com/documentation/dispatch/dispatchqueue
+
+https://developer.apple.com/documentation/dispatch/dispatchqueue/global(qos:)
+
+https://developer.apple.com/documentation/dispatch/dispatchqueue/init(label:qos:attributes:autoreleasefrequency:target:)

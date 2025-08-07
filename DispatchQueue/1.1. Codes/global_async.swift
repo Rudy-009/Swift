@@ -1,11 +1,9 @@
 import Foundation
 
-let global = DispatchQueue.global()
-
 print("main started ⭐️")
 
 for i in 0...5 {
-    global.sync {
+    DispatchQueue.global().async {
         print("No.\(i), Thread: \(Thread.current)")
     }
 }
