@@ -30,4 +30,38 @@ serialQueue.async { // block1
 }
 ```
 
-**block1**이 Thread2에서 실행했다고 가정해봅시다. **DispatchQueue.global().sync**을 실행하면 block2를 시리얼 큐로 보내고 Thread2는 waiting 상태로 바뀝니다. [sync 공식문서](https://developer.apple.com/documentation/dispatch/dispatchqueue/sync(execute:)-3segw)에서 가능하다면 언제나 성능 향상을 위해서 현재 쓰레드로 block을 다시 보낸다고 합니다. 즉, 상황이 맞다면 GCD가 대기상태인 Thread2로 보낼 수 있고 이로인해 **데드락**이 발생하게 됩니다.
+**block1**이 Thread2에서 실행했다고 가정해봅시다. **DispatchQueue.global().sync**을 실행하면 block2를 시리얼 큐로 보내고 Thread2는 waiting 상태로 바뀝니다. 시리얼 큐에서 대기상태인 Thread2로 block2를 보낸다면 이로인해 **데드락**이 발생하게 됩니다.
+
+## 글로벌 큐에서도?
+[sync 공식문서](https://developer.apple.com/documentation/dispatch/dispatchqueue/sync(execute:)-3segw)에서 가능하다면 언제나 성능 향상을 위해서 현재 쓰레드로 block을 다시 보낸다고 합니다. 글로벌 큐에서도 상황이 맞다면 GCD가 대기상태인 Thread2로 보낼 수 있고 이로인해 **데드락**이 발생하게 됩니다. 하지만, 지금은 클로벌 큐를 통해 의도적으로 일으키려고 해도 잘 안되네요... 업그레이드했나...?
+
+# 3. 강한 참조 주의 **[weak self]**
+
+```swift
+class ViewController: UIViewController {
+    DispatchQueue.global().async { [weak self] in
+        self?. ...
+    }
+}
+```
+
+- 비동기적으로 실행하면 백그라운드 쓰레드(메인 쓰레드 이외의 쓰레드)에서 클로저는 현재 ViewController를 참조하게 된다.
+- 만약, ViewController가 dismiss (메모리에서 해제)된다면 메인 쓰레드에서는 해제되었지만, 참조 수가 남아서 메모리에서 해제되지 않습니다.
+
+따라서 **[weak self]**를 통해 백그라운드 쓰레드가 참조 수를 올리지 못하게 하여 메모리 누수를 방지합니다.
+
+# 4. UI 작업은 반드시 메인 쓰레드에서
+
+```swift
+DispatchQueue.main.async {
+    // UI 작업
+}
+```
+
+비동기 처리가 완료 되고 이를 UI에 반영하고 싶다면, 반드시 메인 쓰레드에서 실행될 수 있게 해주어야 합니다.
+
+참고 자료
+
+[앨런 iOS 앨런 iOS Concurrency(동시성)](https://www.inflearn.com/course/ios-concurrency-gcd-operation/dashboard)
+
+[sync 공식문서](https://developer.apple.com/documentation/dispatch/dispatchqueue/sync(execute:)-3segw)
