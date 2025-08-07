@@ -21,8 +21,14 @@ GCD란? 언어 기능, 런타임 라이브러리, 시스템 개선 사항을 포
 
 과거에는 개발자가 직접 쓰레드를 관리했습니다. 멀티쓰레딩은 복잡하고 에러가 많이 발생해서 해결하고자 등장한 개념이 바로 GCD입니다.
 
-# 작업 (Task)
+# 작업 (Task) or 블록 (block)
 코드 1에서 { } 안의 실행되는 코드를 말합니다. 동기 비동기 등을 정하기 전에 어떤 동작을 수행할지 정해야겠죠? 그게 바로 작업입니다. swift가 발전하며 `async/await`가 소개되며 `Task`도 추가되었습니다. 이 `Task`와는 관련이 없습니다.
+
+[sync 관련 공식문서](https://developer.apple.com/documentation/dispatch/dispatchqueue/sync(execute:)-3segw)에서 작업을 block 이라는 단어로도 표현하고 있습니다.
+
+```swift
+func sync(execute block: () -> Void)
+```
 
 # 큐 or 대기행렬(Queue)
 작업이 본인의 쓰레드를 배정받기 전까지 대기하는 장소입니다. 여기서 큐의 종류에 따라 배정되는 쓰레드가 결정됩니다.
