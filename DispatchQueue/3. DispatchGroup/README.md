@@ -95,7 +95,7 @@ wait ended
 
 비동기적으로 다른 쓰레드에서 "wait started" 구문이 출력된 이후, 이 작업은 group1의 종료를 기다리는 상태가 됩니다. 그룹의 종료 이후, 바로 wait ended가 실행됩니다.
 
-쓰레드를 강제로 대기상태에 만든다는 뜻은 Main에서 실행되면 안됩니다. 그렇다면 UI가 멈춘 것처럼 나타날 것입니다.
+쓰레드를 강제로 대기상태에 만든다는 뜻은 메인 쓰레드에서 실행되면 안됩니다. 그렇다면 UI가 멈춘 것처럼 나타날 것입니다.
 
 ## wait(timeout:) -> DispatchTimeoutResult
 
@@ -179,3 +179,12 @@ Async Task X Completed
 All Tasks Completed
 
 - 그룹 내의 모든 작업을 완료한 이후 notify() 가 실행됩니다.
+
+참고 자료
+
+https://developer.apple.com/documentation/dispatch/dispatchgroup
+
+https://developer.apple.com/documentation/dispatch/dispatchgroup/notify(qos:flags:queue:execute:)
+
+https://developer.apple.com/documentation/dispatch/dispatchgroup/wait()
+
