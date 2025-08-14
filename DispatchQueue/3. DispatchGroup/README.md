@@ -2,7 +2,7 @@
 
 비동기 작업 A, B, C가 있다고 가정해보겠습니다. 이 모든 작업을 병렬 처리로 작업을 실행시키고 나서 모든 작업이 종료되는 시점을 알아야 한다면 어떻게 해야할까요? `DispatchGroup`을 사용하면 위와 같은 요청 사항을 처리할 수 있습니다.
 
-## 반드시 사진 제작 후, 첨부
+![](Group.png)
 
 [공식문서](https://developer.apple.com/documentation/dispatch/dispatchgroup)
 > A group of tasks that you monitor as a single unit.
