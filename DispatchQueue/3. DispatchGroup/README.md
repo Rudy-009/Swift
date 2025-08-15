@@ -180,6 +180,8 @@ All Tasks Completed
 
 - 그룹 내의 모든 작업을 완료한 이후 notify() 가 실행됩니다.
 
+다음 시간에는 Dispatch WorkItem와 Dispatch Semaphore에 대해 알아보겠습니다.
+
 참고 자료
 
 https://developer.apple.com/documentation/dispatch/dispatchgroup
@@ -187,4 +189,3 @@ https://developer.apple.com/documentation/dispatch/dispatchgroup
 https://developer.apple.com/documentation/dispatch/dispatchgroup/notify(qos:flags:queue:execute:)
 
 https://developer.apple.com/documentation/dispatch/dispatchgroup/wait()
-
