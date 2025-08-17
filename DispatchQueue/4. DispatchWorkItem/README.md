@@ -58,3 +58,8 @@ item1.notify(queue: global, execute: item2)
 
 item1이 끝난 이후에 item2가 실행되는 코드입니다.
 
+참고 자료
+
+[앨런 iOS 앨런 iOS Concurrency(동시성)](https://www.inflearn.com/course/ios-concurrency-gcd-operation/dashboard)
+
+[DispatchWorkItem 공식문서](https://developer.apple.com/documentation/dispatch/dispatchworkitem)

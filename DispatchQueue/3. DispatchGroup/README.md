@@ -184,6 +184,8 @@ All Tasks Completed
 
 참고 자료
 
+[앨런 iOS 앨런 iOS Concurrency(동시성)](https://www.inflearn.com/course/ios-concurrency-gcd-operation/dashboard)
+
 https://developer.apple.com/documentation/dispatch/dispatchgroup
 
 https://developer.apple.com/documentation/dispatch/dispatchgroup/notify(qos:flags:queue:execute:)
