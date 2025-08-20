@@ -30,13 +30,15 @@ Swift 5.5에서 등장한 Swift Concurrency는 이러한 문제를 예방하고�
 
 **“데이터(객체나 변수 등)에 여러 쓰레드를 사용하여 접근하여도, 한번에 한개의 쓰레드만 접근가능하도록 처리하여 경쟁상황의 문제없이 사용”**
 
+그렇다면 Thread Safety를 고려해야하는 상황은 어떤 상황일까요? 메인 쓰레드 이외의 다른 큐에서 메모리 주소에 접근할 수 있는 경우입니다. 메인 쓰레드에서만 동작한다면, 굳이 생각할 필요는 없을겁니다.
+
 어떤 방법으로 Thread Safe Code 를 작성할 수 있을지 알아보겠습니다.
 
-## 시리얼 큐와 sync
+# 시리얼 큐와 sync
 
 비동기적인 작업에서 어떤 자원에 접근할 때, 동일한 시리얼 큐와 sync를 통해 순서를 강제적으로 지정한다면 경쟁 상황을 피할 수 있습니다.
 
-예시 코드
+### 문제 예시 코드
 ```swift
 var num = 10000
 for _ in 0..<100 {
@@ -52,4 +54,39 @@ sleep(1)
 print(num)
 ```
 
-10번 실행하면 1 번은 10000이 아닌 다른 수가 출력되기도 합니다. 즉, 경쟁 상황이 발생하여 덮어씌워진 것입니다.
+10번 실행하면 1 번은 10000이 아닌 다른 수가 출력되기도 합니다. 즉, 경쟁 상황이 발생하여 값이 덮어씌워진 것입니다.
+
+![](data_race.png)
+
+위 코드를 함수화 하고 Simulator에서 실행한 결과입니다. TSan(Thread Sanitizer)을 이용해서 확인해본 결과 Data race가 발생한다고 경고하고 있습니다.
+
+### 예시 코드
+
+```swift
+class SafeCounter {
+    private var value: Int = 10000
+    private let queue = DispatchQueue(label: "safe.counter.queue")
+
+    func increment() {
+        queue.sync {
+            self.value += 1
+        }
+    }
+
+    func decrement() {
+        queue.sync {
+            self.value -= 1
+        }
+    }
+
+    func getValue() -> Int {
+        queue.sync {
+            return self.value
+        }
+    }
+}
+```
+
+위 코드는 value에 읽기/쓰기 작업을 하는 경우 시리얼 큐와 sync를 이용해서 데이터 경쟁을 방지하는 코드입니다. 같은 조건에서 실행하게 되어도 Data race가 발생하지 않습니다.
+
+
