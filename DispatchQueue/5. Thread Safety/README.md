@@ -89,4 +89,6 @@ class SafeCounter {
 
 위 코드는 value에 읽기/쓰기 작업을 하는 경우 시리얼 큐와 sync를 이용해서 데이터 경쟁을 방지하는 코드입니다. 같은 조건에서 실행하게 되어도 Data race가 발생하지 않습니다.
 
+[프로젝트 코드: 시뮬레이터 환경에서 실행 후, TSan으로 확인해보세요!](https://github.com/Rudy-009/Swift/tree/main/DispatchQueue/5.%20Thread%20Safety/Thread-Safety) 
+
 
