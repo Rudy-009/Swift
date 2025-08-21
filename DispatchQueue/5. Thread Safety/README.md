@@ -10,7 +10,39 @@ Swift 5.5에서 등장한 Swift Concurrency는 이러한 문제를 예방하고�
 
 ## 경쟁 상황 (Race Condition)
 
-- 2개이상의 쓰레드에서 공유된 데이터에 접근 동시적으로 접근하는 경우 발생할 수 있는 문제입니다. 동시에 읽기를 진행한다면 문제는 안되겠죠. 하지만, 동시에 쓰기 작업을 실행한다면 이는 순서를 반드시 잘 정해줄 필요가 있습니다.
+- 타이밍이나 이벤트의 순서로 인해 코드의 명확성에 영향을 주는 경우 발생하는 경우를 말합니다. 동시성 프로그래밍으로 인해 이벤트의 순서가 보장되지 않아 결과를 예측할 수 없는 경우라고 이해됩니다.
+
+## Data Race
+
+- 쓰레드가 다른 쓰레드가 쓰기 작업 중인 메모리 주소에 접근할 때 발생하는 현상입니다. 자주 쓰는 예시인 은행 잔고 계산을 생각해본다면, 잔고 100에서 프로세스 A는 송금 50, 프로세스 B는 50입금을 담당합니다.
+
+```
+- A : 잔고 100 읽기
+- A : -50
+- A : 잔고 50 쓰기
+- B : 잔고 50 읽기
+- B : + 50
+- B : 잔고 100 쓰기
+
+결과 100
+```
+
+이런 순서로 되어야 하는데, 동시에 쓰기 작업을 하게 되어서 결과가 꼬이는 경우입니다.
+
+```
+- A : 잔고 100 읽기
+- B : 잔고 100 읽기
+- A : -50
+- A : 잔고 50 쓰기
+- B : + 50
+- B : 잔고 150 쓰기
+
+결과 150
+```
+
+[Race Condition vs Data Race 참고](https://www.avanderlee.com/swift/race-condition-vs-data-race/)
+
+저희가 앞으로 주로 보게될 예시는 Data Race라고 알아두시면 좋을거 같습니다.
 
 ## 교착 상태 (DeadLock)
 
@@ -22,73 +54,10 @@ Swift 5.5에서 등장한 Swift Concurrency는 이러한 문제를 예방하고�
 
 낮은 우선 순위의 작업이 자원을 배타적으로 사용하고 있을 때, 작업의 우선순위가 바뀌는 경우
 
-이는, GCD가 낮은 우선순위의 작업의 우선순위를 (임시로) 높여서 빨리 동작시킬 수 있습니다. 
+이는, GCD가 낮은 우선순위의 작업의 우선순위를 (임시로) 높여서 빨리 동작시킬 수 있습니다.
 
 # Thread Safety
 
-앨런님 강의에서 Thread Safety 정의는 이렇습니다.
+**Thread Safety** 란? 멀티 쓰레드 환경에서 프로그램이 예측 가능한 방식으로 동작하는 상태입니다.
 
-**“데이터(객체나 변수 등)에 여러 쓰레드를 사용하여 접근하여도, 한번에 한개의 쓰레드만 접근가능하도록 처리하여 경쟁상황의 문제없이 사용”**
-
-그렇다면 Thread Safety를 고려해야하는 상황은 어떤 상황일까요? 메인 쓰레드 이외의 다른 큐에서 메모리 주소에 접근할 수 있는 경우입니다. 메인 쓰레드에서만 동작한다면, 굳이 생각할 필요는 없을겁니다.
-
-어떤 방법으로 Thread Safe Code 를 작성할 수 있을지 알아보겠습니다.
-
-# 시리얼 큐와 sync
-
-비동기적인 작업에서 어떤 자원에 접근할 때, 동일한 시리얼 큐와 sync를 통해 순서를 강제적으로 지정한다면 경쟁 상황을 피할 수 있습니다.
-
-### 문제 예시 코드
-```swift
-var num = 10000
-for _ in 0..<100 {
-    DispatchQueue.global().async {
-        num += 1
-    }
-    DispatchQueue.global().async {
-        num -= 1
-    }
-}
-
-sleep(1)
-print(num)
-```
-
-10번 실행하면 1 번은 10000이 아닌 다른 수가 출력되기도 합니다. 즉, 경쟁 상황이 발생하여 값이 덮어씌워진 것입니다.
-
-![](data_race.png)
-
-위 코드를 함수화 하고 Simulator에서 실행한 결과입니다. TSan(Thread Sanitizer)을 이용해서 확인해본 결과 Data race가 발생한다고 경고하고 있습니다.
-
-### 예시 코드
-
-```swift
-class SafeCounter {
-    private var value: Int = 10000
-    private let queue = DispatchQueue(label: "safe.counter.queue")
-
-    func increment() {
-        queue.sync {
-            self.value += 1
-        }
-    }
-
-    func decrement() {
-        queue.sync {
-            self.value -= 1
-        }
-    }
-
-    func getValue() -> Int {
-        queue.sync {
-            return self.value
-        }
-    }
-}
-```
-
-위 코드는 value에 읽기/쓰기 작업을 하는 경우 시리얼 큐와 sync를 이용해서 데이터 경쟁을 방지하는 코드입니다. 같은 조건에서 실행하게 되어도 Data race가 발생하지 않습니다.
-
-[프로젝트 코드: 시뮬레이터 환경에서 실행 후, TSan으로 확인해보세요!](https://github.com/Rudy-009/Swift/tree/main/DispatchQueue/5.%20Thread%20Safety/Thread-Safety) 
-
-
+다음 시간에는 시리얼 큐와 sync, Dispatch Barrier로 Thread Safe Code 를 작성하는 방법을 알아보겠습니다.
