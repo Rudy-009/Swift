@@ -21,7 +21,7 @@
 
 `let group1 = DispatchGroup()`
 
-2. sync/async 함수의 매개변수로 group이 존재합니다. 여기에 선언해준 DispatchGroup 인스턴스를 할당합니다.
+2. sync/async 함수의 매개변수로 group이 존재합니다. 여기에 선언해준 `DispatchGroup` 인스턴스를 할당합니다.
 
 ```swift
 DispatchQueue.global().async(group: group1){ // group1에 작업을 할당
@@ -30,11 +30,12 @@ DispatchQueue.global().async(group: group1){ // group1에 작업을 할당
 ```
 
 
-3. 작업 그룹의 내용이 모두 끝난 경우를 알고 이후 동작을 지정하려는 경우, DispatchGroup 인스턴스의 notify(queue: )`를 호출합니다.
+3. 작업 그룹의 내용이 모두 끝난 경우를 알고 이후 동작을 지정하려는 경우, `DispatchGroup` 인스턴스의 `notify(queue: )`를 호출합니다.
 `queue`는 어떤 DispatchQueue에서 실행할지 정하는 매개변수입니다.
 
 ```swift
 let group1 = DispatchGroup()
+
 DispatchQueue.global().async(group: group1){
     sleep(1)
     print("Task1 Completed")
@@ -63,11 +64,11 @@ All Tasks Completed
 
 그룹 내의 모든 작업이 종료된 이후 All Task Completed 구문이 출력되는 것을 보실 수 있습니다.
 
-notify()는 작업을 그룹 종료 이후에 실행될 수 있게 스케줄링합니다. 즉, 비동기적으로 실행할 수 있게 한다고 생각하시면 됩니다.
+`notify()`는 작업을 그룹 종료 이후에 실행될 수 있게 스케줄링합니다. 즉, 비동기적으로 실행할 수 있게 한다고 생각하시면 됩니다.
 
 ## wait()
 
-wait()가 실행되면 그룹이 완료될때까지 현재 대기열(쓰레드)을 차단합니다. 즉, 그룹의 종료를 동기적으로 기다립니다. 
+`wait()`가 실행되면 그룹이 완료될때까지 현재 대기열(쓰레드)을 차단합니다. 즉, 그룹의 종료를 동기적으로 기다립니다.
 
 위 코드에서 아래 코드를 추가하고 실행해보겠습니다.
 
@@ -93,7 +94,7 @@ All Tasks Completed
 
 wait ended
 
-비동기적으로 다른 쓰레드에서 "wait started" 구문이 출력된 이후, 이 작업은 group1의 종료를 기다리는 상태가 됩니다. 그룹의 종료 이후, 바로 wait ended가 실행됩니다.
+비동기적으로 다른 쓰레드에서 "wait started" 구문이 출력된 이후, 이 작업은 `group1`의 종료를 기다리는 상태가 됩니다. 그룹의 종료 이후, 바로 wait ended가 실행됩니다.
 
 쓰레드를 강제로 대기상태에 만든다는 뜻은 메인 쓰레드에서 실행되면 안됩니다. 그렇다면 UI가 멈춘 것처럼 나타날 것입니다.
 
@@ -145,7 +146,7 @@ Async Task X Completed : 그룹 내의 비동기 작업이 종료
 
 - 그룹 내의 모든 작업이 완료되지 않았음에도 완료되었다는 출력이 비동기 보다 먼저 출력되었습니다.
 
-enter()와 leave()를 이용해서 비동기 작업을 그룹 종료조건에 포함시키는 방법이 있습니다.
+`enter()`와 `leave()`를 이용해서 비동기 작업을 그룹 종료조건에 포함시키는 방법이 있습니다.
 
 반드시 짝이 맞아야 하며, 그렇지 않으면 런타임 에러가 발생할 수 있습니다.
 
