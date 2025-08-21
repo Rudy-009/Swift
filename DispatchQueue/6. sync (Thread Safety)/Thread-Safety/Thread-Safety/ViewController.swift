@@ -9,10 +9,17 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let bankAccountActor = BankAccountActor()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .black
         test()
         safeTest()
+        Task {
+            await actorTest()
+            print("actor: \(await bankAccountActor.balance)")
+        }
     }
     
     func test() {
@@ -27,26 +34,33 @@ class ViewController: UIViewController {
             }
         }
         sleep(1)
-        print(num)
+        print("unsafe: \(num)")
     }
     
     func safeTest() {
-        let counter = SafeCounter()
+        let bankAccountClass = BankAccountClass()
         for _ in 0..<100 {
             DispatchQueue.global().async {
-                counter.increment()
+                bankAccountClass.increment()
             }
             DispatchQueue.global().async {
-                counter.decrement()
+                bankAccountClass.decrement()
             }
         }
-        usleep(1000_000)
-        print(counter.getValue())
+        usleep(100_000)
+        print("class: \(bankAccountClass.getValue())")
+    }
+    
+    func actorTest() async {
+        for _ in 0..<100 {
+            await bankAccountActor.deposit()
+            await bankAccountActor.withdraw()
+        }
     }
 
 }
 
-class SafeCounter {
+class BankAccountClass {
     private var value: Int = 10000
     private let queue = DispatchQueue(label: "safe.counter.queue")
 
@@ -67,4 +81,18 @@ class SafeCounter {
             return self.value
         }
     }
+}
+
+actor BankAccountActor {
+    
+    var balance = 10000
+    
+    func deposit() {
+        balance += 1
+    }
+    
+    func withdraw() {
+        balance -= 1
+    }
+    
 }
