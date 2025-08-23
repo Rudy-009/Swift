@@ -88,7 +88,7 @@ class MainActorDemo: UIViewController {
         Task {
             await classInstanceAsync.changeTitle(to: "new async class \(count)")
             self.classAsyncLabel.text = self.classInstanceAsync.title
-            await classInstanceAsync.changeTitleWithoutMainActor(to: "new non mainAcotr async mehtod")
+            classInstanceAsync.changeTitleWithoutMainActor(to: "new non mainActor async mehtod")
         }
         
 //        Task {
@@ -117,7 +117,7 @@ class ClassAsyncDemonstration {
         print("is Main Thread: \(Thread.isMainThread)")
     }
     
-    func changeTitleWithoutMainActor(to content: String) async {
+    func changeTitleWithoutMainActor(to content: String) {
         title = content
         print("is Main Thread: \(Thread.isMainThread)")
     }
