@@ -14,12 +14,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .black
-        test()
-        safeTest()
-        Task {
-            await actorTest()
-            print("actor: \(await bankAccountActor.balance)")
-        }
+        // test()
+        // safeTest()
+//        Task {
+//            await actorTest()
+//            print("actor: \(await bankAccountActor.balance)")
+//        }
     }
     
     func test() {
