@@ -309,29 +309,6 @@ class AnimationPracticeViewController: UIViewController {
     // MARK: - Animation Methods (여기가 연습 대상 코드!)
     @MainActor
     public func showDimAndActiveAnimation(_ sender: CardButtonView) async {
-        //        // 화면 크기 계산
-        //        let screenWidth = self.view.bounds.width
-        //        let screenHeight = self.view.bounds.height
-        //
-        //        // 목표 크기
-        //        let targetWidth = (Double(screenWidth) * 1.8)/3.0
-        //        let targetHeight = (Double)(targetWidth) * 1.8
-        //
-        //        // 현재 카드의 크기
-        //        let currentWidth = sender.bounds.width
-        //        let currentHeight = sender.bounds.height
-        //
-        //        // 스케일 계산
-        //        let scaleX = targetWidth / currentWidth
-        //        let scaleY = targetHeight / currentHeight
-        //
-        //        // 화면 중앙 위치 계산
-        //        let centerX = screenWidth / 2
-        //        let centerY = screenHeight / 2
-        //
-        //        // 선택된 카드 중앙으로 이동 및 크기 조정
-        //        let translateX = centerX - sender.center.x
-        //        let translateY = centerY - sender.center.y
         
         self.view.bringSubviewToFront(dimView)
         self.view.bringSubviewToFront(sender)
