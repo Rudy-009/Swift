@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		63D3D2792E5AF60200874718 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 63D3D2782E5AF60200874718 /* SnapKit */; };
+		63D3D27C2E5AF72500874718 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 63D3D27B2E5AF72500874718 /* Then */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		63D3D1272E5AF46E00874718 /* Animation_UIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Animation_UIKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63D3D2792E5AF60200874718 /* SnapKit in Frameworks */,
+				63D3D27C2E5AF72500874718 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = Animation_UIKit;
 			packageProductDependencies = (
+				63D3D2782E5AF60200874718 /* SnapKit */,
+				63D3D27B2E5AF72500874718 /* Then */,
 			);
 			productName = Animation_UIKit;
 			productReference = 63D3D1272E5AF46E00874718 /* Animation_UIKit.app */;
@@ -107,6 +116,10 @@
 			);
 			mainGroup = 63D3D11E2E5AF46E00874718;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				63D3D2772E5AF60200874718 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				63D3D27A2E5AF72500874718 /* XCRemoteSwiftPackageReference "Then" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 63D3D1282E5AF46E00874718 /* Products */;
 			projectDirPath = "";
@@ -341,6 +354,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		63D3D2772E5AF60200874718 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		63D3D27A2E5AF72500874718 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		63D3D2782E5AF60200874718 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63D3D2772E5AF60200874718 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		63D3D27B2E5AF72500874718 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63D3D27A2E5AF72500874718 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 63D3D11F2E5AF46E00874718 /* Project object */;
 }
