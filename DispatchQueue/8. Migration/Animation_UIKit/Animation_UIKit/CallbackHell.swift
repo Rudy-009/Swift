@@ -313,9 +313,6 @@ class AnimationPracticeViewController: UIViewController {
         self.view.bringSubviewToFront(dimView)
         self.view.bringSubviewToFront(sender)
         
-        // 0.3s     나머지 카드 흐리게 처리
-        // 0.3s     선택된 카드
-        // 0.7s     선택된 카드 확대
         // 1단계 : 선택된 카드 이외의 self, 나머지 카드들에게 dimAnimation 적용
         await dimAnimation(without: sender)
         // 2단계 : dim 효과 이후, 카드 확대 애니메이션
@@ -341,60 +338,6 @@ class AnimationPracticeViewController: UIViewController {
         } completion: { _ in
             self.sparkEnd()
         }
-        //        UIView.animate(withDuration: 0.3) { // 선택되지 않은 카드들은 흐리게 처리
-        //            self.dimView.alpha = 0.6
-        //            [self.cardButton01, self.cardButton02, self.cardButton03, self.cardButton04].forEach { button in
-        //                if button != sender {
-        //                    button.alpha = 0.5
-        //                }
-        //            }
-        //        } completion: { _ in // dim 효과 완료 후 카드 확대 애니메이션
-        //            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.7, // 스프링 효과를 더 부드럽게
-        //                           initialSpringVelocity: 0) { // 초기 속도를 낮춤
-        //                sender.transform = CGAffineTransform.identity
-        //                    .translatedBy(x: translateX, y: translateY)
-        //                    .scaledBy(x: scaleX, y: scaleY)
-        //            } completion: { _ in
-        //                UIView.transition(with: sender, duration: 0.7, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                    UIView.transition(with: sender, duration: 0.7, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                        UIView.transition(with: sender, duration: 0.5, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                            UIView.transition(with: sender, duration: 0.4, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                                UIView.transition(with: sender, duration: 0.3, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                                    self.sparkStart()
-        //                                    UIView.transition(with: sender, duration: 0.2, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                                        UIView.transition(with: sender, duration: 0.2, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                                            UIView.transition(with: sender, duration: 0.2, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                                                UIView.transition(with: sender, duration: 0.1, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                                                    UIView.transition(with: sender, duration: 0.1, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                                                        UIView.transition(with: sender, duration: 0.1, options: .transitionFlipFromRight , animations: nil ) { _ in
-        //                                                            UIView.transition(with: sender, duration: 0.1, options: .transitionFlipFromRight , animations: nil ) { _ in
-        // White Effect
-        //                                                                UIView.animate(withDuration: 0.1) {
-        //                                                                    self.setPuppyImage(sender: sender)
-        //                                                                    self.dimView.backgroundColor = .white
-        //                                                                    self.dimView.alpha = 1
-        //                                                                    sender.isEnabled = false
-        //
-        //                                                                    self.characterNameLabel.isHidden = false
-        //                                                                    self.subTitleLabel.isHidden = false
-        //                                                                    self.startButton.isHidden = false
-        //                                                                } completion: { _ in
-        //                                                                    self.sparkEnd()
-        //                                                                }
-        //                                                            }
-        // }
-        //                                                    }
-        //                                                }
-        //                                            }
-        //                                        }
-        //                                    }
-        //                                }
-        //     } // Forth 0.4
-        //    } // Third 0.5
-        //   } // Second: 0.7
-        //  } // First: 0.7
-        // }
-        //    }
     }
     
     private func sparkStart() {
