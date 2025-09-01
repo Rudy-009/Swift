@@ -1,20 +1,15 @@
 //
-//  callbackHell.swift
+//  CallbackHell.swift
 //  Animation_UIKit
 //
-//  Created by 이승준 on 8/24/25.
+//  Created by 이승준 on 9/1/25.
 //
-
-import UIKit
-import SnapKit
-import Then
-
 import UIKit
 
 // MARK: - PuppyCardButtonView
-class CardButtonView: UIButton {
+class PuppyCardButtonView: UIButton {
     
-    public lazy var cardImage = UIImageView().then {
+    public lazy var puppyImage = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.backgroundColor = .systemBlue
         $0.layer.cornerRadius = 8
@@ -36,17 +31,17 @@ class CardButtonView: UIButton {
     }
     
     private func addComponents() {
-        self.addSubview(cardImage)
+        self.addSubview(puppyImage)
         self.backgroundColor = .white
         
-        cardImage.translatesAutoresizingMaskIntoConstraints = false
+        puppyImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            cardImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            cardImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            cardImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-            cardImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
-            cardImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            cardImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
+            puppyImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            puppyImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            puppyImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+            puppyImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+            puppyImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            puppyImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
         ])
     }
     
@@ -64,11 +59,11 @@ class CardButtonView: UIButton {
 }
 
 // MARK: - Main Practice View
-class AnimationPracticeViewController: UIViewController {
+class AnimationCallbackViewController: UIViewController {
     
     // UI Components
     private lazy var mainTitleLabel = UILabel().then {
-        $0.text = "카드를 선택해주세요"
+        $0.text = "같이 성장해나갈\n강아지를 선택해주세요"
         $0.textColor = UIColor(red: 0.235, green: 0.235, blue: 0.235, alpha: 1)
         $0.font = UIFont.boldSystemFont(ofSize: 30)
         $0.textAlignment = .center
@@ -96,13 +91,13 @@ class AnimationPracticeViewController: UIViewController {
     
     private lazy var buttonsStackFrame = UIView()
     
-    public lazy var cardButton01 = CardButtonView()
-    public lazy var cardButton02 = CardButtonView()
-    public lazy var cardButton03 = CardButtonView()
-    public lazy var cardButton04 = CardButtonView()
+    public lazy var cardButton01 = PuppyCardButtonView()
+    public lazy var cardButton02 = PuppyCardButtonView()
+    public lazy var cardButton03 = PuppyCardButtonView()
+    public lazy var cardButton04 = PuppyCardButtonView()
     
-    public lazy var retryButton = UIButton().then {
-        $0.setTitle("다시 뽑기", for: .normal)
+    public lazy var startButton = UIButton().then {
+        $0.setTitle("시작하기", for: .normal)
         $0.setTitleColor(UIColor(red: 0.235, green: 0.235, blue: 0.235, alpha: 1), for: .normal)
         $0.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         $0.backgroundColor = .systemYellow
@@ -130,7 +125,7 @@ class AnimationPracticeViewController: UIViewController {
         // Add all subviews
         [dimView, mainTitleLabel, buttonsStackFrame,
          cardButton01, cardButton02, cardButton03, cardButton04,
-         characterNameLabel, subTitleLabel, retryButton, brightView].forEach {
+         characterNameLabel, subTitleLabel, startButton, brightView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -184,10 +179,10 @@ class AnimationPracticeViewController: UIViewController {
             subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             // Start button
-            retryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            retryButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            retryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -34),
-            retryButton.heightAnchor.constraint(equalToConstant: 60),
+            startButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            startButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            startButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -34),
+            startButton.heightAnchor.constraint(equalToConstant: 60),
             
             // Bright view
             brightView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -208,20 +203,21 @@ class AnimationPracticeViewController: UIViewController {
         cardButton03.addTarget(self, action: #selector(cardButtonTapped), for: .touchUpInside)
         cardButton04.addTarget(self, action: #selector(cardButtonTapped), for: .touchUpInside)
         
-        retryButton.addTarget(self, action: #selector(resetButtonTapped), for: .touchUpInside)
+        startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
     }
     
     @objc private func cardButtonTapped(_ sender: CardButtonView) {
-        Task {
-            await showDimAndActiveAnimation(sender)
-        }
+        showDimAndActiveAnimation(sender)
     }
     
-    @objc private func resetButtonTapped() {
+    @objc private func startButtonTapped() {
+        print("Start button tapped!")
+        // Reset the view for another test
         resetView()
     }
     
     private func resetView() {
+        // Reset all animations and states
         [cardButton01, cardButton02, cardButton03, cardButton04].forEach { button in
             button.transform = .identity
             button.alpha = 1.0
@@ -232,31 +228,13 @@ class AnimationPracticeViewController: UIViewController {
         dimView.backgroundColor = .gray
         characterNameLabel.isHidden = true
         subTitleLabel.isHidden = true
-        retryButton.isHidden = true
+        startButton.isHidden = true
         brightView.isHidden = true
         brightView.alpha = 0
     }
     
-    func dimAnimation(without sender: UIView) async {
-        return await withCheckedContinuation { continuation in
-            UIView.animate(
-                withDuration: 0.3,
-                animations: {
-                    self.dimView.alpha = 0.6
-                    [self.cardButton01, self.cardButton02, self.cardButton03, self.cardButton04].forEach { button in
-                        if button != sender{
-                            button.alpha = 0.5
-                        }
-                    }
-                },
-                completion: { _ in
-                    continuation.resume()
-                }
-            )
-        }
-    }
-    
-    func enlargeAnimation(_ sender: UIView) async {
+    // MARK: - Animation Methods (여기가 연습 대상 코드!)
+    public func showDimAndActiveAnimation(_ sender: CardButtonView) {
         // 화면 크기 계산
         let screenWidth = self.view.bounds.width
         let screenHeight = self.view.bounds.height
@@ -280,63 +258,63 @@ class AnimationPracticeViewController: UIViewController {
         // 선택된 카드 중앙으로 이동 및 크기 조정
         let translateX = centerX - sender.center.x
         let translateY = centerY - sender.center.y
-        return await withCheckedContinuation { continuation in
-            UIView.animate(
-                withDuration: 1.0,
-                delay: 0,
-                usingSpringWithDamping: 0.7, // 스프링 효과를 더 부드럽게
-                initialSpringVelocity: 0.3,
-                animations: {
-                    sender.transform = CGAffineTransform.identity
-                        .translatedBy(x: translateX, y: translateY)
-                        .scaledBy(x: scaleX, y: scaleY)
-                }
-                , completion : {_ in 
-                    continuation.resume()
-                }
-            )
-        }
-    }
-    
-    func rotateAnimation(_ sender: UIView, duration: TimeInterval) async {
-        return await withCheckedContinuation { continuation in
-            UIView.transition( with: sender, duration: duration, options: .transitionFlipFromRight , animations: nil ) { _ in
-                continuation.resume()
-            }
-        }
-    }
-    
-    // MARK: - Animation Methods (여기가 연습 대상 코드!)
-    @MainActor
-    public func showDimAndActiveAnimation(_ sender: CardButtonView) async {
         
         self.view.bringSubviewToFront(dimView)
         self.view.bringSubviewToFront(sender)
         
-        // 1단계 : 선택된 카드 이외의 self, 나머지 카드들에게 dimAnimation 적용
-        await dimAnimation(without: sender)
-        // 2단계 : dim 효과 이후, 카드 확대 애니메이션
-        await enlargeAnimation(sender)
-        // 3단계 : 카드 회전
-        for duration in [0.7, 0.7, 0.5, 0.4, 0.3] {
-            await rotateAnimation(sender, duration: duration)
-        }
-        self.sparkStart()
-        for duration in [0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1] {
-            await rotateAnimation(sender, duration: duration)
-        }
-        
-        UIView.animate(withDuration: 0.1) {
-            self.setCardImage(sender: sender)
-            self.dimView.backgroundColor = .white
-            self.dimView.alpha = 1
-            sender.isEnabled = false
-
-            self.characterNameLabel.isHidden = false
-            self.subTitleLabel.isHidden = false
-            self.retryButton.isHidden = false
-        } completion: { _ in
-            self.sparkEnd()
+        UIView.animate(withDuration: 0.3) { // 선택되지 않은 카드들은 흐리게 처리
+            self.dimView.alpha = 0.6
+            [self.cardButton01, self.cardButton02, self.cardButton03, self.cardButton04].forEach { button in
+                if button != sender{
+                    button.alpha = 0.5
+                }
+            }
+        } completion: { _ in // dim 효과 완료 후 카드 확대 애니메이션
+            UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.7, // 스프링 효과를 더 부드럽게
+                           initialSpringVelocity: 0.3) { // 초기 속도를 낮춤
+                sender.transform = CGAffineTransform.identity
+                    .translatedBy(x: translateX, y: translateY)
+                    .scaledBy(x: scaleX, y: scaleY)
+            } completion: { _ in
+                UIView.transition(with: sender, duration: 0.7, options: .transitionFlipFromRight , animations: nil ) { _ in
+                    UIView.transition(with: sender, duration: 0.7, options: .transitionFlipFromRight , animations: nil ) { _ in
+                        UIView.transition(with: sender, duration: 0.5, options: .transitionFlipFromRight , animations: nil ) { _ in
+                            UIView.transition(with: sender, duration: 0.4, options: .transitionFlipFromRight , animations: nil ) { _ in
+                                UIView.transition(with: sender, duration: 0.3, options: .transitionFlipFromRight , animations: nil ) { _ in
+                                    self.sparkStart()
+                                    UIView.transition(with: sender, duration: 0.2, options: .transitionFlipFromRight , animations: nil ) { _ in
+                                        UIView.transition(with: sender, duration: 0.2, options: .transitionFlipFromRight , animations: nil ) { _ in
+                                            UIView.transition(with: sender, duration: 0.2, options: .transitionFlipFromRight , animations: nil ) { _ in
+                                                UIView.transition(with: sender, duration: 0.1, options: .transitionFlipFromRight , animations: nil ) { _ in
+                                                    UIView.transition(with: sender, duration: 0.1, options: .transitionFlipFromRight , animations: nil ) { _ in
+                                                        UIView.transition(with: sender, duration: 0.1, options: .transitionFlipFromRight , animations: nil ) { _ in
+                                                            UIView.transition(with: sender, duration: 0.1, options: .transitionFlipFromRight , animations: nil ) { _ in
+                                                                // White Effect
+                                                                UIView.animate(withDuration: 0.1) {
+                                                                    self.setCardImage(sender: sender)
+                                                                    self.dimView.backgroundColor = .white
+                                                                    self.dimView.alpha = 1
+                                                                    sender.isEnabled = false
+                                                                    
+                                                                    self.characterNameLabel.isHidden = false
+                                                                    self.subTitleLabel.isHidden = false
+                                                                    self.startButton.isHidden = false
+                                                                } completion: { _ in
+                                                                    self.sparkEnd()
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } // Forth 0.4
+                        } // Third 0.5
+                    } // Second: 0.7
+                } // First: 0.7
+            }
         }
     }
     
@@ -353,7 +331,7 @@ class AnimationPracticeViewController: UIViewController {
             self.brightView.alpha = 0
             self.view.bringSubviewToFront(self.characterNameLabel)
             self.view.bringSubviewToFront(self.subTitleLabel)
-            self.view.bringSubviewToFront(self.retryButton)
+            self.view.bringSubviewToFront(self.startButton)
         } completion: { _ in
             self.view.sendSubviewToBack(self.brightView)
         }
@@ -387,3 +365,11 @@ class AnimationPracticeViewController: UIViewController {
     }
 }
 
+// MARK: - Then Extension (편의를 위해 포함)
+extension NSObject {
+    @discardableResult
+    func then(_ closure: (Self) -> Void) -> Self {
+        closure(self)
+        return self
+    }
+}
