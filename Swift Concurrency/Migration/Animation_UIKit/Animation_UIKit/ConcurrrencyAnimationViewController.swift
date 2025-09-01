@@ -46,7 +46,6 @@ final class ConcurrencyAnimationViewController: UIViewController {
     }
 
     // MARK: - Concurrency-friendly animation wrappers
-    @MainActor
     private func dimAnimation(without sender: UIView) async {
         await withCheckedContinuation { continuation in
             UIView.animate(withDuration: 0.3, animations: {
@@ -60,8 +59,7 @@ final class ConcurrencyAnimationViewController: UIViewController {
             })
         }
     }
-
-    @MainActor
+    
     private func enlargeAnimation(_ sender: UIView) async {
         // 화면 크기 계산
         let screenWidth = rootView.bounds.width
@@ -97,8 +95,7 @@ final class ConcurrencyAnimationViewController: UIViewController {
             )
         }
     }
-
-    @MainActor
+    
     private func rotateAnimation(_ sender: UIView, duration: TimeInterval) async {
         await withCheckedContinuation { continuation in
             UIView.transition(with: sender, duration: duration, options: .transitionFlipFromRight, animations: nil) { _ in
@@ -108,7 +105,6 @@ final class ConcurrencyAnimationViewController: UIViewController {
     }
 
     // MARK: - High-level animation flow (practice target)
-    @MainActor
     public func showDimAndActiveAnimation(_ sender: CardButtonView) async {
         rootView.bringSubviewToFront(rootView.dimView)
         rootView.bringSubviewToFront(sender)
