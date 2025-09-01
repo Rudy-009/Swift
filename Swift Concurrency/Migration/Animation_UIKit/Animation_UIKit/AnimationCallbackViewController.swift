@@ -14,7 +14,6 @@ final class AnimationCallbackViewController: UIViewController {
 
     // MARK: - Lifecycle
     override func loadView() {
-        // ViewController의 루트 뷰를 커스텀 뷰로 교체
         view = AnimationCallbackView()
     }
 
@@ -44,8 +43,7 @@ final class AnimationCallbackViewController: UIViewController {
     @objc private func startButtonTapped() {
         rootView.reset()
     }
-
-    // MARK: - Animation Methods (원본 로직 유지: Callback Hell)
+    
     public func showDimAndActiveAnimation(_ sender: CardButtonView) {
         // 화면 크기 계산
         let screenWidth = rootView.bounds.width

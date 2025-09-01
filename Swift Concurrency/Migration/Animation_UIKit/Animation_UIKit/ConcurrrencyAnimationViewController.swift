@@ -10,13 +10,11 @@ import SnapKit
 import Then
 
 final class ConcurrencyAnimationViewController: UIViewController {
-
-    // 커스텀 루트 뷰로 다운캐스트
+    
     private var rootView: ConcurrencyAnimationView { view as! ConcurrencyAnimationView }
 
     // MARK: - Lifecycle
     override func loadView() {
-        // ViewController의 루트 뷰를 커스텀 뷰로 교체
         view = ConcurrencyAnimationView()
     }
 
@@ -147,7 +145,6 @@ final class ConcurrencyAnimationViewController: UIViewController {
     }
 
     // MARK: - Helpers
-    @MainActor
     private func sparkStart() {
         UIView.animate(withDuration: 0.5) {
             self.rootView.bringSubviewToFront(self.rootView.brightView)
@@ -155,8 +152,7 @@ final class ConcurrencyAnimationViewController: UIViewController {
             self.rootView.brightView.alpha = 1
         }
     }
-
-    @MainActor
+    
     private func sparkEnd() {
         UIView.animate(withDuration: 0.5) {
             self.rootView.brightView.alpha = 0
@@ -167,8 +163,7 @@ final class ConcurrencyAnimationViewController: UIViewController {
             self.rootView.sendSubviewToBack(self.rootView.brightView)
         }
     }
-
-    @MainActor
+    
     private func setCardImage(sender: CardButtonView) {
         guard let id = sender.getID() else { return }
         switch id {
