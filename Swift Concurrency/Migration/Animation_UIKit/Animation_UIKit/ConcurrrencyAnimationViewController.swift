@@ -117,14 +117,15 @@ final class ConcurrencyAnimationViewController: UIViewController {
 
         // 3단계: 여러 단계 플립 회전
         for duration in [0.7, 0.7, 0.5, 0.4, 0.3] {
-            await rotateAnimation(sender, duration: duration)
+            await UIView.transition(with: sender, duration: duration, options: .transitionFlipFromRight, animations: nil)
+            // await rotateAnimation(sender, duration: duration)
         }
 
         sparkStart()
         for duration in [0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1] {
-            await rotateAnimation(sender, duration: duration)
+            await UIView.transition(with: sender, duration: duration, options: .transitionFlipFromRight, animations: nil)
         }
-
+        
         // 최종 화이트 효과 + UI 노출
         UIView.animate(withDuration: 0.1) {
             self.setCardImage(sender: sender)
@@ -185,4 +186,16 @@ final class ConcurrencyAnimationViewController: UIViewController {
             sender.cardImage.backgroundColor = .gray
         }
     }
+}
+
+extension UIView {
+    
+    class func transition(with: UIView, duration: TimeInterval, options: UIView.AnimationOptions, animations: (() -> Void)?) async {
+        await withCheckedContinuation { continuation in
+            UIView.transition(with: with, duration: duration, options: options, animations: nil) { _ in
+                continuation.resume()
+            }
+        }
+    }
+    
 }
