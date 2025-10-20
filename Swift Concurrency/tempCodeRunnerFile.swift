@@ -1,3 +1,3 @@
 await MainActor.run {
-        print("async function3 \(Thread.current)")
-    }
+    print("async function3 \(Thread.current)")
+}
