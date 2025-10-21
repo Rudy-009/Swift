@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Async Await Performance
+//  Concurrency-Test-Project
 //
-//  Created by 이승준 on 7/31/25.
+//  Created by 이승준 on 10/20/25.
 //
 
 import UIKit

@@ -7,32 +7,32 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		631F0F822E3B9E5D005160E0 /* Async Await Performance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Async Await Performance.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63BE01ED2EA66248006AE481 /* Concurrency-Test-Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Concurrency-Test-Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		631F0F942E3B9E5F005160E0 /* Exceptions for "Async Await Performance" folder in "Async Await Performance" target */ = {
+		63BE01FF2EA66249006AE481 /* Exceptions for "Concurrency-Test-Project" folder in "Concurrency-Test-Project" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 631F0F812E3B9E5D005160E0 /* Async Await Performance */;
+			target = 63BE01EC2EA66248006AE481 /* Concurrency-Test-Project */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		631F0F842E3B9E5D005160E0 /* Async Await Performance */ = {
+		63BE01EF2EA66248006AE481 /* Concurrency-Test-Project */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				631F0F942E3B9E5F005160E0 /* Exceptions for "Async Await Performance" folder in "Async Await Performance" target */,
+				63BE01FF2EA66249006AE481 /* Exceptions for "Concurrency-Test-Project" folder in "Concurrency-Test-Project" target */,
 			);
-			path = "Async Await Performance";
+			path = "Concurrency-Test-Project";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		631F0F7F2E3B9E5D005160E0 /* Frameworks */ = {
+		63BE01EA2EA66248006AE481 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,18 +42,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		631F0F792E3B9E5D005160E0 = {
+		63BE01E42EA66248006AE481 = {
 			isa = PBXGroup;
 			children = (
-				631F0F842E3B9E5D005160E0 /* Async Await Performance */,
-				631F0F832E3B9E5D005160E0 /* Products */,
+				63BE01EF2EA66248006AE481 /* Concurrency-Test-Project */,
+				63BE01EE2EA66248006AE481 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		631F0F832E3B9E5D005160E0 /* Products */ = {
+		63BE01EE2EA66248006AE481 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				631F0F822E3B9E5D005160E0 /* Async Await Performance.app */,
+				63BE01ED2EA66248006AE481 /* Concurrency-Test-Project.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,64 +61,64 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		631F0F812E3B9E5D005160E0 /* Async Await Performance */ = {
+		63BE01EC2EA66248006AE481 /* Concurrency-Test-Project */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 631F0F952E3B9E5F005160E0 /* Build configuration list for PBXNativeTarget "Async Await Performance" */;
+			buildConfigurationList = 63BE02002EA66249006AE481 /* Build configuration list for PBXNativeTarget "Concurrency-Test-Project" */;
 			buildPhases = (
-				631F0F7E2E3B9E5D005160E0 /* Sources */,
-				631F0F7F2E3B9E5D005160E0 /* Frameworks */,
-				631F0F802E3B9E5D005160E0 /* Resources */,
+				63BE01E92EA66248006AE481 /* Sources */,
+				63BE01EA2EA66248006AE481 /* Frameworks */,
+				63BE01EB2EA66248006AE481 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				631F0F842E3B9E5D005160E0 /* Async Await Performance */,
+				63BE01EF2EA66248006AE481 /* Concurrency-Test-Project */,
 			);
-			name = "Async Await Performance";
+			name = "Concurrency-Test-Project";
 			packageProductDependencies = (
 			);
-			productName = "Async Await Performance";
-			productReference = 631F0F822E3B9E5D005160E0 /* Async Await Performance.app */;
+			productName = "Concurrency-Test-Project";
+			productReference = 63BE01ED2EA66248006AE481 /* Concurrency-Test-Project.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		631F0F7A2E3B9E5D005160E0 /* Project object */ = {
+		63BE01E52EA66248006AE481 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					631F0F812E3B9E5D005160E0 = {
-						CreatedOnToolsVersion = 16.4;
+					63BE01EC2EA66248006AE481 = {
+						CreatedOnToolsVersion = 26.0.1;
 					};
 				};
 			};
-			buildConfigurationList = 631F0F7D2E3B9E5D005160E0 /* Build configuration list for PBXProject "Async Await Performance" */;
+			buildConfigurationList = 63BE01E82EA66248006AE481 /* Build configuration list for PBXProject "Concurrency-Test-Project" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 631F0F792E3B9E5D005160E0;
+			mainGroup = 63BE01E42EA66248006AE481;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 631F0F832E3B9E5D005160E0 /* Products */;
+			productRefGroup = 63BE01EE2EA66248006AE481 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				631F0F812E3B9E5D005160E0 /* Async Await Performance */,
+				63BE01EC2EA66248006AE481 /* Concurrency-Test-Project */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		631F0F802E3B9E5D005160E0 /* Resources */ = {
+		63BE01EB2EA66248006AE481 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -128,7 +128,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		631F0F7E2E3B9E5D005160E0 /* Sources */ = {
+		63BE01E92EA66248006AE481 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -138,7 +138,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		631F0F962E3B9E5F005160E0 /* Debug */ = {
+		63BE02012EA66249006AE481 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -147,25 +147,33 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2QJX795Q3R;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Async Await Performance/Info.plist";
+				INFOPLIST_FILE = "Concurrency-Test-Project/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "iseungjun.Async-Await-Performance";
+				PRODUCT_BUNDLE_IDENTIFIER = "iseungjun.Concurrency-Test-Project";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
-		631F0F972E3B9E5F005160E0 /* Release */ = {
+		63BE02022EA66249006AE481 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -174,25 +182,33 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2QJX795Q3R;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Async Await Performance/Info.plist";
+				INFOPLIST_FILE = "Concurrency-Test-Project/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "iseungjun.Async-Await-Performance";
+				PRODUCT_BUNDLE_IDENTIFIER = "iseungjun.Concurrency-Test-Project";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
-		631F0F982E3B9E5F005160E0 /* Debug */ = {
+		63BE02032EA66249006AE481 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -245,7 +261,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -256,7 +272,7 @@
 			};
 			name = Debug;
 		};
-		631F0F992E3B9E5F005160E0 /* Release */ = {
+		63BE02042EA66249006AE481 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -303,7 +319,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -316,25 +332,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		631F0F7D2E3B9E5D005160E0 /* Build configuration list for PBXProject "Async Await Performance" */ = {
+		63BE01E82EA66248006AE481 /* Build configuration list for PBXProject "Concurrency-Test-Project" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				631F0F982E3B9E5F005160E0 /* Debug */,
-				631F0F992E3B9E5F005160E0 /* Release */,
+				63BE02032EA66249006AE481 /* Debug */,
+				63BE02042EA66249006AE481 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		631F0F952E3B9E5F005160E0 /* Build configuration list for PBXNativeTarget "Async Await Performance" */ = {
+		63BE02002EA66249006AE481 /* Build configuration list for PBXNativeTarget "Concurrency-Test-Project" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				631F0F962E3B9E5F005160E0 /* Debug */,
-				631F0F972E3B9E5F005160E0 /* Release */,
+				63BE02012EA66249006AE481 /* Debug */,
+				63BE02022EA66249006AE481 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 631F0F7A2E3B9E5D005160E0 /* Project object */;
+	rootObject = 63BE01E52EA66248006AE481 /* Project object */;
 }
