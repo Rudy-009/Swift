@@ -15,20 +15,21 @@ class ViewController: UIViewController {
         view.backgroundColor = .darkGray
         
         Task {
-//            await nonSuspendingAwait()
-//            await runIOBoundTasks(count: 6, delaySeconds: 0.5)
+            //            await nonSuspendingAwait()
+            //            await runIOBoundTasks(count: 6, delaySeconds: 0.5)
             await runCPUBoundTasksWithYield(count: 6)
-//            await runCPUBoundTasksWithoutVariable(count: 6)
-//            await await runCPUBoundTasks(count: 6)
-           // await runIOBoundTaskswithoutVariable(count: 6, delaySeconds: 0.005)
-//            await concurrentIOBoundTaskWithTaskGroup(count: 20, delaySeconds: 0.5)
-//            await concurrentCPUBoundTaskWithTaskGroup(count: 20)
+            //            await runCPUBoundTasksWithoutVariable(count: 6)
+            //            await await runCPUBoundTasks(count: 6)
+            // await runIOBoundTaskswithoutVariable(count: 6, delaySeconds: 0.005)
+            //            await concurrentIOBoundTaskWithTaskGroup(count: 20, delaySeconds: 0.5)
+            //            await concurrentCPUBoundTaskWithTaskGroup(count: 20)
         }
         
-//        Task.detached {
-//            await runCPUBoundTasksDetached(count: 6)
-//        }
+        //        Task.detached {
+        //            await runCPUBoundTasksDetached(count: 6)
+        //        }
     }
+    
 }
 
 func simpleAsyncCalculation() async {
@@ -316,3 +317,4 @@ func concurrentIOBoundTaskWithTaskGroup(count: Int, delaySeconds: Double) async 
     print("  -> Task Group 완료. 그룹 내 총 소요 시간: \(String(format: "%.10f", totalDuration))초.")
     // 총 소요 시간은 가장 오래 걸린 Task의 시간(delay seconds)에 근접해야 한다.
 }
+
