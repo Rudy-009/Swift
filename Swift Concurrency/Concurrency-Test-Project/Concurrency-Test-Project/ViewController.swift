@@ -14,22 +14,54 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .darkGray
         
-        Task {
-            //            await nonSuspendingAwait()
-            //            await runIOBoundTasks(count: 6, delaySeconds: 0.5)
-            await runCPUBoundTasksWithYield(count: 6)
-            //            await runCPUBoundTasksWithoutVariable(count: 6)
-            //            await await runCPUBoundTasks(count: 6)
-            // await runIOBoundTaskswithoutVariable(count: 6, delaySeconds: 0.005)
-            //            await concurrentIOBoundTaskWithTaskGroup(count: 20, delaySeconds: 0.5)
-            //            await concurrentCPUBoundTaskWithTaskGroup(count: 20)
-        }
-        
-        //        Task.detached {
-        //            await runCPUBoundTasksDetached(count: 6)
-        //        }
+//        Task {
+//            await runCPUBoundTasks(count: 6)
+//            await nonSuspendingAwait()
+//            await runIOBoundTasks(count: 6, delaySeconds: 0.5)
+//            
+//            await runCPUBoundTasksWithYield(count: 6)
+//            await runCPUBoundTasksWithoutVariable(count: 6)
+//            
+//            await runIOBoundTaskswithoutVariable(count: 6, delaySeconds: 0.005)
+//            await concurrentIOBoundTaskWithTaskGroup(count: 20, delaySeconds: 0.5)
+//            await concurrentCPUBoundTaskWithTaskGroup(count: 20)
+//            await runIOBoundTasksWithoutSuspension(count: 6, delaySeconds: 0.005)
+//        }
+//        
+//        Task.detached {
+//            await runCPUBoundTasksDetached(count: 6)
+//        }
     }
-    
+}
+
+// MARK: - I/O Bound WITHOUT Suspension Point (Thread.sleep 사용)
+
+func IOBoundTaskWithoutSuspension(i: Int, count: Int, delaySeconds: Double) async {
+    let start = Date()
+    Thread.sleep(forTimeInterval: delaySeconds)
+    let duration = Date().timeIntervalSince(start)
+    print("  [\(i)/\(count)] 완료. 소요 시간: \(String(format: "%.10f", duration))초.")
+}
+
+func runIOBoundTasksWithoutSuspension(count: Int, delaySeconds: Double) async {
+    Task {
+        await IOBoundTaskWithoutSuspension(i: 1, count: count, delaySeconds: delaySeconds)
+    }
+    Task {
+        await IOBoundTaskWithoutSuspension(i: 2, count: count, delaySeconds: delaySeconds)
+    }
+    Task {
+        await IOBoundTaskWithoutSuspension(i: 3, count: count, delaySeconds: delaySeconds)
+    }
+    Task {
+        await IOBoundTaskWithoutSuspension(i: 4, count: count, delaySeconds: delaySeconds)
+    }
+    Task {
+        await IOBoundTaskWithoutSuspension(i: 5, count: count, delaySeconds: delaySeconds)
+    }
+    Task {
+        await IOBoundTaskWithoutSuspension(i: 6, count: count, delaySeconds: delaySeconds)
+    }
 }
 
 func simpleAsyncCalculation() async {
