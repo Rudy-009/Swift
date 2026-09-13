@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     var body: some View {
@@ -19,6 +20,44 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
+@Model
+class User {
+    init() { }
 }
+
+class Container {
+    
+    func insert<T>(_ model: T) where T : PersistentModel {
+        
+    }
+    
+    func insert(_ model: any PersistentModel) {
+        
+    }
+    
+    protocol BirdWithoutAssociatedType {
+        
+    }
+    
+    func insert<T>(_ models: [T]) where T : BirdWithoutAssociatedType {
+        
+    }
+    
+    func insert(_ models: BirdWithoutAssociatedType) {
+        
+    }
+    
+    protocol BirdWithAssociatedType {
+        associatedtype Content
+    }
+    
+    func insert<T>(_ models: [T]) where T : BirdWithAssociatedType {
+        
+    }
+    
+    func insert(_ models: any BirdWithAssociatedType) {
+        
+    }
+}
+
+
